@@ -16,7 +16,7 @@ import scala.collection.mutable._
 
 /**
  * Spark on Hudi(MOR表) to Hive
- * @ClassName Demo3
+ * @ClassName Demo4
  * @Description
  * @Created by: MengYao
  * @Date: 2021-01-23 16:13:23
