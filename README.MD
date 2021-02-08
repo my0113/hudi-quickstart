@@ -70,9 +70,9 @@
 
 ​		Hudi将DFS上的数据集组织到**基本路径（HoodieWriteConfig.BASE_PATH_PROP）**下的目录结构中。数据集分为多个**分区（DataSourceOptions.PARTITIONPATH_FIELD_OPT_KEY）**，这些分区与Hive表非常相似，是包含该分区的数据文件的文件夹。
 
-![](.\imgs\hudi-cow表存储结构1.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi-cow表存储结构1.png)
 
-![](.\imgs\hudi-cow表存储结构2.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi-cow表存储结构2.png)
 
 ​		在每个分区内，文件被组织为**文件组**，由文件id充当唯一标识。 每个文件组包含多个**文件切片**，其中每个切片包含在某个即时时间的提交/压缩生成的基本列文件（**.parquet**）以及一组日志文件（**.log**），该文件包含自生成基本文件以来对基本文件的插入/更新。 Hudi采用MVCC设计，其中压缩操作将日志和基本文件合并以产生新的文件切片，而清理操作则将未使用的/较旧的文件片删除以回收DFS上的空间。
 
@@ -80,7 +80,7 @@
 
 ​		Hudi通过索引机制提供高效的**Upsert**操作，该机制会将一个RecordKey+PartitionPath组合的方式作为唯一标识映射到一个文件ID，而且，这个唯一标识和文件组/文件ID之间的映射自记录被写入文件组开始就不会再改变。Hudi内置了4类（6个）索引实现，均是继承自顶层的抽象类**HoodieIndex**而来，如下：
 
-![](.\imgs\hudi的4种索引.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi的4种索引.png)
 
 | 索引类型 | 实现类                  | 索引规则                                                     |
 | -------- | ----------------------- | ------------------------------------------------------------ |
@@ -123,7 +123,7 @@
 
 ​		**2）读取：**在读取数据集时，通过读取最新的数据文件来获取最新的更新，此存储类型适用于少量写入和大量读取的场景。
 
-![hudi_cow.png](.\imgs\hudi_cow.png)
+![hudi_cow.png](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_cow.png)
 
 ### 1.4.2 **读时合并（Merge On Read，MOR）表**
 
@@ -133,7 +133,7 @@
 
 ​		**2)  读取：**在读取数据集时，需要先将增量文件与旧文件进行合并，然后生成列式文件成功后，再进行查询。
 
-![](.\imgs\hudi_mor.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor.png)
 
 ### 1.4.3 **COW和MOR的对比**
 
@@ -154,7 +154,7 @@
 
 注意：如果在MOR表中使用增量视图查询时会提示：**Incremental view not implemented yet, for merge-on-read tables**
 
-![](.\imgs\MOR表不支持的视图-1不支持增量视图.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/MOR表不支持的视图-1不支持增量视图.png)
 
 
 
@@ -865,19 +865,19 @@ spark-submit --verbose --class com.kingsoft.hudi.Demo3 --master yarn --deploy-mo
 
 ​		在yarn中，看到作业执行成功时
 
-![](.\imgs\hudi_cow_hive自动建表后插入5条数据对应的Spark作业.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_cow_hive自动建表后插入5条数据对应的Spark作业.png)
 
 ​		再去查看hive中test_db库下是否多了一张叫做tbl_hudi_temperature_cow的表
 
-![](.\imgs\hudi_cow_hive查看自动建表.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_cow_hive查看自动建表.png)
 
 ​		查看详细的建表信息
 
-![](.\imgs\hudi_cow_hive自动建表.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_cow_hive自动建表.png)
 
 ​		最后，查询表的数据，如下：
 
-![](.\imgs\hudi_cow_hive自动建表后插入5条数据.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_cow_hive自动建表后插入5条数据.png)
 
 **b) ** 测试修改数据
 
@@ -891,15 +891,15 @@ spark-submit --verbose --class com.kingsoft.hudi.Demo3 --master yarn --deploy-mo
 
 ​		在yarn中，看到作业执行成功时
 
-![](.\imgs\hudi_cow_hive自动建表后更新1条数据对应的Spark作业.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_cow_hive自动建表后更新1条数据对应的Spark作业.png)
 
 ​		再去Hive中查询数据（发现deviceid为4310的数据的温度变成了30.4度）
 
-![](.\imgs\hudi_cow_hive自动建表后更新1条数据.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_cow_hive自动建表后更新1条数据.png)
 
 ​		为了看出更新的效果，本次修改与上次插入的数据对比图如下：
 
-![](.\imgs\hudi_cow_hive自动建表后的新增、修改动作对应的数据变化对比.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_cow_hive自动建表后的新增、修改动作对应的数据变化对比.png)
 
 **c) ** 测试删除数据
 
@@ -913,15 +913,15 @@ spark-submit --verbose --class com.kingsoft.hudi.Demo3 --master yarn --deploy-mo
 
 ​		在yarn中，看到作业执行成功时
 
-![](.\imgs\hudi_cow_hive自动建表后删除1条数据对应的Spark作业.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_cow_hive自动建表后删除1条数据对应的Spark作业.png)
 
 ​		再去Hive中查询数据（查看deviceid为4310的数据是否已经被成功删除）
 
-![](.\imgs\hudi_cow_hive自动建表后删除1条数据.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_cow_hive自动建表后删除1条数据.png)
 
 ​		为了看出更新的效果，本次删除与上次修改以及上上次插入的数据对比图如下：
 
-![](.\imgs\hudi_cow_hive自动建表后的新增、修改和删除动作对应的数据变化对比.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_cow_hive自动建表后的新增、修改和删除动作对应的数据变化对比.png)
 
 #### 1.6.1.4 基于MOR表的Hive使用
 
@@ -1156,7 +1156,7 @@ spark-submit --verbose --class com.kingsoft.hudi.Demo4 --master yarn --deploy-mo
 
 ​		在yarn中，看到作业执行成功时
 
-![](.\imgs\hudi_mor_hive自动建表后插入5条数据对应的Spark作业.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive自动建表后插入5条数据对应的Spark作业.png)
 
 ​		再去查看hive中test_db库下是否多了2张表，分别是:
 
@@ -1167,23 +1167,23 @@ spark-submit --verbose --class com.kingsoft.hudi.Demo4 --master yarn --deploy-mo
 
 ​		<b style='font-size:16px;color:red;'>注意</b>：如果你总是想看到最新的数据，那么请查询_rt表。相反，如果不在意数据的新鲜程度（比如说查询昨天的数据、上一个小时的数据），那么_rt表会有更好的查询性能。
 
-![](.\imgs\hudi_mor_hive查看自动建表.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive查看自动建表.png)
 
 ​		查看tbl_hudi_temperature_mor1_ro表的详细建表信息
 
-![](.\imgs\hudi_mor_hive查看自动创建_ro表.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive查看自动创建_ro表.png)
 
 ​		查看tbl_hudi_temperature_mor1_rt表的详细建表信息
 
-![](.\imgs\hudi_mor_hive查看自动创建_rt表.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive查看自动创建_rt表.png)
 
 ​		最后，先查询tbl_hudi_temperature_mor1_ro表的数据(<b style='font-size:16px;color:red;'>请忽略Hive显示的字段错位</b>)，如下：
 
-![](.\imgs\hudi_mor_hive自动建表后插入到_ro表的5条数据.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive自动建表后插入到_ro表的5条数据.png)
 
 ​		最后，再查询tbl_hudi_temperature_mor1_rt表的数据(<b style='font-size:16px;color:red;'>请忽略Hive显示的字段错位</b>)，如下：
 
-![](.\imgs\hudi_mor_hive自动建表后插入到_rt表的5条数据.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive自动建表后插入到_rt表的5条数据.png)
 
 **b) ** 测试修改数据
 
@@ -1197,15 +1197,15 @@ spark-submit --verbose --class com.kingsoft.hudi.Demo4 --master yarn --deploy-mo
 
 ​		在yarn中，看到作业执行成功时
 
-![](.\imgs\hudi_mor_hive自动建表后更新1条数据对应的Spark作业.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive自动建表后更新1条数据对应的Spark作业.png)
 
 ​		再去Hive中查询数据（**仅_rt表的deviceid为4310的温度数据被修改成了30.4度，但_ro表不会变**）
 
-![](.\imgs\hudi_mor_hive自动建表后修改_ro表的1条数据.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive自动建表后修改_ro表的1条数据.png)
 
-![](.\imgs\hudi_mor_hive自动建表后修改_rt表的1条数据.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive自动建表后修改_rt表的1条数据.png)
 
-![](.\imgs\hudi_mor_hive自动建表后修改1条数据（_ro表不会变但_rt表会变）.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive自动建表后修改1条数据（_ro表不会变但_rt表会变）.png)
 
 **c) ** 测试删除数据
 
@@ -1219,15 +1219,15 @@ spark-submit --verbose --class com.kingsoft.hudi.Demo4 --master yarn --deploy-mo
 
 ​		在yarn中，看到作业执行成功时
 
-![](.\imgs\hudi_mor_hive自动建表后删除1条数据对应的Spark作业.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive自动建表后删除1条数据对应的Spark作业.png)
 
 ​		再查看tbl_hudi_temperature_mor1_ro表和tbl_hudi_temperature_mor1_ro表（**仅_rt表的deviceid为4310的温度数据被删除了，但_ro表不会变**）：
 
-![](.\imgs\hudi_mor_hive自动建表后删除_ro表的1条数据.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive自动建表后删除_ro表的1条数据.png)
 
-![](.\imgs\hudi_mor_hive自动建表后删除_rt表的1条数据.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive自动建表后删除_rt表的1条数据.png)
 
-![](.\imgs\hudi_mor_hive自动建表后删除1条数据（_ro表不会变但_rt表会变）.png)
+![](https://github.com/my0113/hudi-quickstart/blob/master/imgs/hudi_mor_hive自动建表后删除1条数据（_ro表不会变但_rt表会变）.png)
 
 
 
