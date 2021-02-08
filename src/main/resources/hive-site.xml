@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+    <!-- Hive的Metastore地址 -->
+    <property>
+        <name>hive.metastore.uris</name>
+        <value>thrift://node01:9083</value>
+    </property>
+    <!-- Hive访问Metastore的JDBC连接地址 -->
+    <property>
+        <name>javax.jdo.option.ConnectionURL</name>
+        <value>jdbc:mysql://node01:3306/hive?createDatabaseIfNotExist=true&amp;characterEncoding=UTF-8&amp;useSSL=false</value>
+    </property>
+    <!-- Hive访问Metastore的JDBC连接驱动类 -->
+    <property>
+        <name>javax.jdo.option.ConnectionDriverName</name>
+        <value>com.mysql.cj.jdbc.Driver</value>
+    </property>
+    <!-- Hive访问Metastore的JDBC连接用户名 -->
+    <property>
+        <name>javax.jdo.option.ConnectionUserName</name>
+        <value>root</value>
+    </property>
+    <!-- Hive访问Metastore的JDBC连接密码 -->
+    <property>
+        <name>javax.jdo.option.ConnectionPassword</name>
+        <value>MySQL_PWD_123</value>
+    </property>
+    <!-- Hive用于存放数据的HDFS目录 -->
+    <property>
+        <name>hive.metastore.warehouse.dir</name>
+        <value>/apps/hive/warehouse</value>
+    </property>
+    <!-- 
+         当datanucleus.schema.autoCreateAll=true且hive. metaore .schema.verification=false会自动创建Hive Metastore相关的表，但不建议这样使用，
+         推荐使用schematool命令手动初始化Hive Metastore。
+     -->
+    <property>
+        <name>datanucleus.schema.autoCreateAll</name>
+        <value>true</value>
+    </property>
+    <property>
+        <name>hive.metastore.schema.verification</name>
+        <value>false</value>
+    </property>
+    <!-- HS2的WebUI监听的主机地址 -->
+    <property>
+        <name>hive.server2.webui.host</name>
+        <value>node01</value>
+    </property>
+    <!-- HS2的WebUI的端口号，默认就是10002 -->
+    <property>
+        <name>hive.server2.webui.port</name>
+        <value>10002</value>
+    </property>
+    <!-- 在HS2 WebUI中查看Query Plan -->
+    <property>
+        <name>hive.log.explain.output</name>
+        <value>true</value>
+    </property>
+    <!-- Hive用于存储不同map/reduce阶段的执行计划和这些阶段的中间输出结果的HDFS目录 -->
+    <property>
+        <name>hive.exec.scratchdir</name>
+        <value>/apps/hive/tmp</value>
+    </property>
+    <!-- 指定scratch目录的权限，默认700 -->
+    <property>
+        <name>hive.scratch.dir.permission</name>
+        <value>733</value>
+    </property>
+    <!-- Hive Thrift客户端使用的用户名 -->
+    <property>
+        <name>hive.server2.thrift.client.user</name>
+        <value>root</value>
+    </property>
+    <!-- Hive Thrift客户端使用的密码 -->
+    <property>
+        <name>hive.server2.thrift.client.password</name>
+        <value>123456</value>
+    </property>
+</configuration>

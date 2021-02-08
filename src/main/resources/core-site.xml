@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+	<!-- 文件系统名称 -->
+	<property>
+		<name>fs.defaultFS</name>
+		<value>hdfs://node01:9820</value>
+	</property>
+	<!-- 其他临时目录都会建立此目录下 -->
+	<property>
+		<name>hadoop.tmp.dir</name>
+		<value>/usr/bdp/data/hadoop</value>
+	</property>
+	<!-- 允许root用户代理所有主机上的任意用户 -->
+	<property>
+		<name>hadoop.proxyuser.root.hosts</name>
+		<value>*</value>
+	</property>
+	<!-- 允许root用户代理所有主机上的任意用户组 -->
+	<property>
+		<name>hadoop.proxyuser.root.groups</name>
+		<value>*</value>
+	</property>
+	<!-- 允许hive用户代理所有主机上的任意用户 -->
+	<property>
+		<name>hadoop.proxyuser.hive.groups</name>
+		<value>*</value>
+	</property>
+	<!-- 允许hive用户代理所有主机上的任意用户组 -->
+	<property>
+		<name>hadoop.proxyuser.hive.hosts</name>
+		<value>*</value>
+	</property>
+</configuration>

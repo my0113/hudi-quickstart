@@ -1,0 +1,68 @@
+<?xml version="1.0"?>
+<configuration>
+	<!-- 设置RM的地址为node01节点 -->
+	<property>
+		<name>yarn.resourcemanager.hostname</name>
+		<value>node01</value>
+	</property>
+	<!-- 启用YARN的WebUI-V2 -->
+	<property>
+		<name>yarn.webapp.ui2.enable</name>
+		<value>true</value>
+	</property>
+	<!-- 设置AUX服务 -->
+	<property>
+		<name>yarn.nodemanager.aux-services</name>
+		<value>mapreduce_shuffle,spark_shuffle</value>
+	</property>
+	<!-- 设置MapReduce的Shuffle实现 -->
+	<property>
+		<name>yarn.nodemanager.aux-services.mapreduce_shuffle.class</name>
+		<value>org.apache.hadoop.mapred.ShuffleHandler</value>
+	</property>
+	<!-- 设置Spark的Shuffle实现 -->
+	<property>
+		<name>yarn.nodemanager.aux-services.spark_shuffle.class</name>
+		<value>org.apache.spark.network.yarn.YarnShuffleService</value>
+	</property>
+	<!-- 为每个容器请求分配的最小内存限制为（512M） -->
+	<property>
+		<name>yarn.scheduler.minimum-allocation-mb</name>
+		<value>512</value>
+	</property>
+	<!-- 为每个容器请求分配的最大内存限制为1GB -->
+	<property>
+		<name>yarn.scheduler.maximum-allocation-mb</name>
+		<value>2048</value>
+	</property>
+	<!-- 虚拟内存比例，默认为2.1，此处设置为4倍 -->
+	<property>
+		<name>yarn.nodemanager.vmem-pmem-ratio</name>
+		<value>4</value>
+	</property>
+	<!-- 用于存放Application的cache数据 -->
+	<property>
+		<name>yarn.nodemanager.local-dirs</name>
+		<value>${hadoop.tmp.dir}/yarn/nm-local-dir</value>
+	</property>
+	<!-- 开启日志聚合 -->
+	<property>
+		<name>yarn.log-aggregation-enable</name>
+		<value>true</value>
+	</property>
+	<!-- 将日志聚合HDFS的哪个目录下 -->
+	<property>
+		<name>yarn.nodemanager.remote-app-log-dir</name>
+		<value>/apps/yarn/logs</value>
+	</property>
+	<!-- 日志保存时间10天,单位秒 -->
+	<property>
+		<name>yarn.log-aggregation.retain-seconds</name>
+		<value>864000</value>
+	</property>
+	<!-- 日志聚合服务器的URL地址 -->
+	<property>
+		<name>yarn.log.server.url</name>
+		<value>http://node01:19888/apps/yarn/jobhistory</value>
+	</property>
+</configuration>

@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<?xml-stylesheet type="text/xsl" href="configuration.xsl"?>
+<configuration>
+	<!-- 指定MR框架通过YARN方式运行 -->
+	<property>
+		<name>mapreduce.framework.name</name>
+		<value>yarn</value>
+	</property>
+	<!-- 历史服务器端口号 -->
+	<property>
+		<name>mapreduce.jobhistory.address</name>
+		<value>node01:10020</value>
+	</property>
+	<!-- 历史服务器的WEB UI端口号 -->
+	<property>
+		<name>mapreduce.jobhistory.webapp.address</name>
+		<value>node01:19888</value>
+	</property>
+	<!-- 内存中缓存的historyfile文件信息，默认20000 -->
+	<property>
+		<name>mapreduce.jobhistory.joblist.cache.size</name>
+		<value>2000</value>
+	</property>
+	<!-- 指定MR作业的AM程序的环境变量 -->
+	<property>
+		<name>yarn.app.mapreduce.am.env</name>
+		<value>HADOOP_MAPRED_HOME=/usr/bdp/service/hadoop</value>
+	</property>
+	<!-- 指定MR做的Map程序的环境变量 -->
+	<property>
+		<name>mapreduce.map.env</name>
+		<value>HADOOP_MAPRED_HOME=/usr/bdp/service/hadoop</value>
+	</property>
+	<!-- 指定MR做的Reduce程序的环境变量 -->
+	<property>
+		<name>mapreduce.reduce.env</name>
+		<value>HADOOP_MAPRED_HOME=/usr/bdp/service/hadoop</value>
+	</property>
+</configuration>
