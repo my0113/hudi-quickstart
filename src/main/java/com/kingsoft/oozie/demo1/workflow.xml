@@ -1,0 +1,40 @@
+<workflow-app  name="spark-pi-wf" xmlns="uri:oozie:workflow:0.5">
+    <start to="SparkAction"/>
+    <action name="SparkAction">
+        <spark xmlns="uri:oozie:spark-action:0.2">
+            <job-tracker>${jobTracker}</job-tracker>
+            <name-node>${nameNode}</name-node>
+            <configuration>
+                <property>
+                    <name>mapred.job.queue.name</name>
+                    <value>${queueName}</value>
+                </property>
+                <property>
+                    <name>spark.yarn.historyServer.address</name>
+                    <value>node01:18081</value>
+                </property>
+                <property>
+                    <name>spark.eventLog.enabled</name>
+                    <value>true</value>
+                </property>
+                <property>
+                    <name>spark.eventLog.dir</name>
+                    <value>${nameNode}/apps/spark/history</value>
+                </property>
+            </configuration>
+            <master>yarn</master>
+            <mode>cluster</mode>
+            <name>Spark Pi</name>
+            <class>${mainClass}</class>
+            <jar>/usr/bdp/service/spark/examples/jars/spark-examples_2.11-2.4.6.jar</jar>
+            <spark-opts>${sparkOpts}</spark-opts>
+            <arg>${arg1}</arg>
+        </spark>
+        <ok to="end"/>
+        <error to="kill"/>
+    </action>
+    <kill name="kill">
+        <message>Action failed, error message[${wf:errorMessage(wf:lastErrorNode())}]</message>
+    </kill>
+    <end name="end"/>
+</workflow-app>

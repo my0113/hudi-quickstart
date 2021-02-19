@@ -4,7 +4,7 @@
 	<!-- 文件系统名称 -->
 	<property>
 		<name>fs.defaultFS</name>
-		<value>hdfs://node01:9820</value>
+		<value>file:///</value>
 	</property>
 	<!-- 其他临时目录都会建立此目录下 -->
 	<property>

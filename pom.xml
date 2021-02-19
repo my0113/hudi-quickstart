@@ -40,6 +40,8 @@
         <hive.version>3.1.0</hive.version>
         <!-- Hudi -->
         <hudi.version>0.6.0</hudi.version>
+        <!-- Oozie -->
+        <oozie.version>4.3.1</oozie.version>
     </properties>
 
     <dependencies>
@@ -135,7 +137,18 @@
                 </exclusion>
             </exclusions>
         </dependency>
-
+        <!-- Oozie -->
+        <dependency>
+            <groupId>org.apache.oozie</groupId>
+            <artifactId>oozie-client</artifactId>
+            <version>${oozie.version}</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>oozie-hadoop-auth</artifactId>
+                    <groupId>org.apache.oozie</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
     </dependencies>
 
     <build>
